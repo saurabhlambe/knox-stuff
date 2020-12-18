@@ -1,0 +1,214 @@
+
+<topology>
+    <gateway>
+        <provider>
+            <role>ha</role>
+            <name>HaProvider</name>
+            <enabled>true</enabled>
+            <param>
+                <name>WEBHDFS</name>
+                <value>maxFailoverAttempts=3;failoverSleep=1000;maxRetryAttempts=300;retrySleep=1000;enabled=true</value>
+            </param>
+            <param>
+                <name>HBASE</name>
+                <value>maxFailoverAttempts=3;failoverSleep=1000;enabled=true</value>
+            </param>
+            <param>
+                <name>HIVE</name>
+                <value>maxFailoverAttempts=3;failoverSleep=1000;enabled=true;zookeeperEnsemble=0a2a4506.a006b2.npd.pvt.azu.westpac.com.au:2181,0a2a4508.a006b2.npd.pvt.azu.westpac.com.au:2181,0a2a4510.a006b2.npd.pvt.azu.westpac.com.au:2181,0a2a4513.a006b2.npd.pvt.azu.westpac.com.au:2181,0a2a4518.a006b2.npd.pvt.azu.westpac.com.au:2181;zookeeperNamespace=hiveserver2</value>
+            </param>
+        </provider>
+       <provider>
+          <role>authentication</role>
+          <name>HadoopAuth</name>
+          <enabled>true</enabled>
+          <param>
+            <name>config.prefix</name>
+            <value>hadoop.auth.config</value>
+          </param>
+          <param>
+            <name>hadoop.auth.config.signature.secret</name>
+            <value>knox-signature-secret</value>
+          </param>
+          <param>
+            <name>hadoop.auth.config.type</name>
+            <value>kerberos</value>
+          </param>
+          <param>
+            <name>hadoop.auth.config.simple.anonymous.allowed</name>
+            <value>false</value>
+          </param>
+          <param>
+            <name>hadoop.auth.config.token.validity</name>
+            <value>1800</value>
+          </param>
+          <param>
+            <name>hadoop.auth.config.cookie.domain</name>
+            <value>.a006b2.npd.pvt.azu.westpac.com.au</value>
+          </param>
+          <param>
+            <name>hadoop.auth.config.cookie.path</name>
+            <value>gateway/kerberos</value>
+          </param>
+          <param>
+            <name>hadoop.auth.config.kerberos.principal</name>
+            <value>HTTP/0a2a4506.a006b2.npd.pvt.azu.westpac.com.au@A006B2.NPD.PVT.AZU.WESTPAC.COM.AU</value>
+          </param>
+          <param>
+            <name>hadoop.auth.config.kerberos.keytab</name>
+            <value>/etc/security/keytabs/spnego.service.keytab</value>
+          </param>
+          <param>
+            <name>hadoop.auth.config.kerberos.name.rules</name>
+            <value>DEFAULT</value>
+          </param>
+        </provider>
+
+        <provider>
+            <role>authorization</role>
+            <name>XASecurePDPKnox</name>
+            <enabled>true</enabled>
+        </provider>
+    </gateway>
+
+    <service>
+        <role>AMBARI</role>
+        <url>https://0a2a4518.a006b2.npd.pvt.azu.westpac.com.au:8443</url>
+    </service>
+
+    <service>
+        <role>AMBARIUI</role>
+        <url>https://0a2a4518.a006b2.npd.pvt.azu.westpac.com.au:8443</url>
+    </service>
+
+    <service>
+        <role>AMBARIWS</role>
+        <url>wss://0a2a4518.a006b2.npd.pvt.azu.westpac.com.au:8443</url>
+    </service>
+
+    <service>
+        <role>ATLAS</role>
+        <url>https://nonpdp01-int.a006b2.npd.pvt.azu.westpac.com.au:21443</url>
+    </service>
+
+    <service>
+        <role>ATLAS-API</role>
+        <url>https://nonpdp01-int.a006b2.npd.pvt.azu.westpac.com.au:21443</url>
+    </service>
+
+    <service>
+        <role>HBASEUI</role>
+        <url>https://0a2a4506.a006b2.npd.pvt.azu.westpac.com.au:16010</url>
+        <url>https://0a2a4508.a006b2.npd.pvt.azu.westpac.com.au:16010</url>
+        <url>https://0a2a4510.a006b2.npd.pvt.azu.westpac.com.au:16010</url>
+    </service>
+
+    <service>
+        <role>HDFSUI</role>
+        <version>2.7.0</version>
+        <url>https://0a2a4508.a006b2.npd.pvt.azu.westpac.com.au:50470</url>
+        <url>https://0a2a4506.a006b2.npd.pvt.azu.westpac.com.au:50470</url>
+    </service>
+
+    <service>
+        <role>HIVE</role>
+        <param>
+            <name>httpclient.socketTimeout</name>
+            <value>180s</value>
+        </param>
+        <param>
+            <name>replayBufferSize</name>
+            <value>1024</value>
+        </param>
+        <param>
+            <name>zookeeperEnsemble</name>
+            <value>0a2a4510.a006b2.npd.pvt.azu.westpac.com.au:2181,0a2a4506.a006b2.npd.pvt.azu.westpac.com.au:2181,0a2a4508.a006b2.npd.pvt.azu.westpac.com.au:2181,0a2a4513.a006b2.npd.pvt.azu.westpac.com.au:2181,0a2a4518.a006b2.npd.pvt.azu.westpac.com.au:2181</value>
+        </param>
+        <param>
+            <name>zookeeperNamespace</name>
+            <value>hiveserver2</value>
+        </param>
+    </service>
+
+    <service>
+        <role>JOBHISTORYUI</role>
+        <url>https://0a2a4513.a006b2.npd.pvt.azu.westpac.com.au:19890</url>
+    </service>
+
+    <service>
+        <role>LIVYSERVER</role>
+        <url>https://0a2a4510.a006b2.npd.pvt.azu.westpac.com.au:8999</url>
+    </service>
+
+    <service>
+        <role>LOGSEARCH</role>
+        <url>https://0a2a4518.a006b2.npd.pvt.azu.westpac.com.au:61888</url>
+    </service>
+
+    <service>
+        <role>NAMENODE</role>
+        <url>hdfs://nonpdp01</url>
+    </service>
+
+    <service>
+        <role>RANGER</role>
+        <url>https://nonpdp01-int.a006b2.npd.pvt.azu.westpac.com.au:6182</url>
+    </service>
+
+    <service>
+        <role>RANGERUI</role>
+        <url>https://nonpdp01-int.a006b2.npd.pvt.azu.westpac.com.au:6182</url>
+    </service>
+
+    <service>
+        <role>RESOURCEMANAGER</role>
+        <url>https://0a2a4508.a006b2.npd.pvt.azu.westpac.com.au:8090/ws</url>
+        <url>https://0a2a4506.a006b2.npd.pvt.azu.westpac.com.au:8090/ws</url>
+    </service>
+
+    <service>
+        <role>SPARKHISTORYUI</role>
+        <url>https://0a2a4510.a006b2.npd.pvt.azu.westpac.com.au:18481</url>
+    </service>
+
+    <service>
+        <role>WEBHBASE</role>
+        <url>https://nonpdp01-int.a006b2.npd.pvt.azu.westpac.com.au:17000</url>
+        <param>
+            <name>replayBufferSize</name>
+            <value>8200</value>
+        </param>
+    </service>
+
+    <service>
+        <role>WEBHDFS</role>
+        <url>https://0a2a4508.a006b2.npd.pvt.azu.westpac.com.au:50470/webhdfs</url>
+        <url>https://0a2a4506.a006b2.npd.pvt.azu.westpac.com.au:50470/webhdfs</url>
+        <param>
+            <name>replayBufferSize</name>
+            <value>2048</value>
+        </param>
+    </service>
+
+    <service>
+        <role>YARNUI</role>
+        <url>https://0a2a4508.a006b2.npd.pvt.azu.westpac.com.au:8090</url>
+        <url>https://0a2a4506.a006b2.npd.pvt.azu.westpac.com.au:8090</url>
+    </service>
+
+    <service>
+        <role>YARNUIV2</role>
+        <url>https://0a2a4508.a006b2.npd.pvt.azu.westpac.com.au:8090</url>
+        <url>https://0a2a4506.a006b2.npd.pvt.azu.westpac.com.au:8090</url>
+    </service>
+
+    <service>
+        <role>ZEPPELINUI</role>
+        <url>https://nonpdp01-int.a006b2.npd.pvt.azu.westpac.com.au:9995</url>
+    </service>
+
+    <service>
+        <role>ZEPPELINWS</role>
+        <url>wss://nonpdp01-int.a006b2.npd.pvt.azu.westpac.com.au:9995/ws</url>
+    </service>
+</topology>
