@@ -118,15 +118,15 @@
         </provider>
 
         <provider>
-                    <role>identity-assertion</role>
-                    <name>Default</name>
-                    <enabled>true</enabled>
+            <role>identity-assertion</role>
+            <name>Default</name>
+            <enabled>true</enabled>
         </provider>
 
         <provider>
-                    <role>authorization</role>
-                    <name>AclsAuthz</name>
-                    <enabled>true</enabled>
+            <role>authorization</role>
+            <name>AclsAuthz</name>
+            <enabled>true</enabled>
         </provider>
 
     </gateway>
