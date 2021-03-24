@@ -1,0 +1,204 @@
+<topology>
+    <gateway>
+        <provider>
+            <role>authentication</role>
+            <name>ShiroProvider</name>
+            <enabled>true</enabled>
+            <param>
+                <name>sessionTimeout</name>
+                <value>30</value>
+            </param>
+            <param>
+                <name>main.ldapRealm</name>
+                <value>org.apache.hadoop.gateway.shirorealm.KnoxLdapRealm</value>
+            </param>
+            <param>
+                <name>main.ldapRealm.userDnTemplate</name>
+                <value>cn={0},ou=squadron_users,ou=users,ou=hortonworks,dc=support,dc=com</value>
+            </param>
+            <param>
+                <name>main.ldapRealm.contextFactory.url</name>
+                <value>ldap://10.113.243.16:389</value>
+            </param>
+
+<!-- search base used to search for groups -->
+            <param>
+                <name>main.ldapRealm.groupSearchBase</name>
+                <value>ou=groups,ou=hortonworks,dc=support,dc=com</value>
+            </param>
+
+<!-- the group object class -->
+            <param>
+                <name>main.ldapRealm.groupObjectClass</name>
+                <value>group</value>
+            </param>
+
+<!-- optional, default value: cn -->
+            <param>
+                <name>main.ldapRealm.groupIdAttribute</name>
+                <value>cn</value>
+            </param>
+
+<!-- defaults to: member -->
+            <param>
+                <name>main.ldapRealm.memberAttribute</name>
+                <value>member</value>
+            </param>
+
+<!-- search base used to search for user bind DN and groups -->
+            <param>
+                <name>main.ldapRealm.searchBase</name>
+                <value>ou=groups,ou=hortonworks,dc=support,dc=com</value>
+            </param>
+
+<!-- search base used to search for user bind DN.
+    Defaults to the value of main.ldapRealm.searchBase. 
+    If main.ldapRealm.userSearchAttributeName is defined, 
+    value for main.ldapRealm.searchBase or main.ldapRealm.userSearchBase 
+    should be defined -->
+            <param>
+                <name>main.ldapRealm.userSearchBase</name>
+                <value>OU=squadron_users,OU=users,OU=hortonworks,DC=SUPPORT,DC=COM</value>
+            </param>
+
+<!-- attribute name for simplified search filter -->
+            <param>
+                <name>main.ldapRealm.userSearchAttributeName</name>
+                <value>sAMAccountName</value>
+            </param>
+
+<!-- optional, default value: person
+         Objectclass to identify user entries in ldap, used to build search 
+         filter to search for user bind DN -->
+            <param>
+                <name>main.ldapRealm.userObjectClass</name>
+                <value>person</value>
+            </param>
+
+<!-- bind DN used to search for groups and user bind DN.  
+         Required if a value is defined for main.ldapRealm.userSearchAttributeName
+         or if the value of main.ldapRealm.authorizationEnabled is true -->
+            <param>
+                <name>main.ldapRealm.contextFactory.systemUsername</name>
+                <value>cn=test1,ou=hortonworks,dc=support,dc=com</value>
+            </param>
+
+<!-- password for systemUserName.
+         Required if a value is defined for main.ldapRealm.userSearchAttributeName
+         or if the value of main.ldapRealm.authorizationEnabled is true -->
+            <param>
+                <name>main.ldapRealm.contextFactory.systemPassword</name>
+                <value>hadoop12345!</value>
+            </param>
+
+<!-- advanced search filter template -->
+            <param>
+                <name>main.ldapRealm.userSearchFilter</name>
+                <value>(&amp;(objectClass=person)(sAMAccountName={0})(|(memberOf=cn=qa,ou=groups,ou=hortonworks,dc=support,dc=com)(memberOf=cn=support,ou=groups,ou=hortonworks,dc=support,dc=com)))</value>
+            </param>
+
+<!-- update the value based on your ldap directory protocol, host and port -->       
+            <param>
+                <name>main.ldapRealm.contextFactory.url</name>
+                <value>ldap://10.113.243.16:389</value>
+            </param>
+
+<!-- optional, default value: simple
+    Update the value based on mechanisms supported by your ldap directory -->
+            <param>
+                <name>main.ldapRealm.contextFactory.authenticationMechanism</name>
+                <value>simple</value>
+            </param>
+    
+    
+            <param>
+                <name>urls./**</name>
+                <value>authcBasic</value>
+            </param>
+        </provider>
+
+        <provider>
+                    <role>identity-assertion</role>
+                    <name>Default</name>
+                    <enabled>true</enabled>
+        </provider>
+
+        <provider>
+                    <role>authorization</role>
+                    <name>AclsAuthz</name>
+                    <enabled>true</enabled>
+        </provider>
+
+    </gateway>
+
+        <service>
+            <role>NAMENODE</role>
+            <url>hdfs://c1232-node2.coelab.cloudera.com:8020</url>
+        </service>
+        <service>
+            <role>JOBTRACKER</role>
+            <url>rpc://c1232-node2.coelab.cloudera.com:8050</url>
+        </service>
+        <service>
+            <role>WEBHDFS</role>
+            <url>http://c1232-node2.coelab.cloudera.com:50070/webhdfs</url>
+        </service>
+        <service>
+            <role>WEBHCAT</role>
+            <url>http://None:50111/templeton</url>
+        </service>
+        <service>
+            <role>OOZIE</role>
+            <url>http://None:11000/oozie</url>
+        </service>
+        <service>
+            <role>OOZIEUI</role>
+            <url>http://None:11000/oozie/</url>
+        </service>
+        <service>
+            <role>WEBHBASE</role>
+            <url>http://c1232-node2.coelab.cloudera.com:8080</url>
+        </service>
+        <service>
+            <role>HIVE</role>
+            <url>http://c1232-node3.coelab.cloudera.com:10001/cliservice</url>
+        </service>
+        <service>
+            <role>RESOURCEMANAGER</role>
+            <url>http://c1232-node2.coelab.cloudera.com:8088/ws</url>
+        </service>
+        <service>
+            <role>YARN</role>
+            <url>http://c1232-node2.coelab.cloudera.com:8088</url>
+        </service>
+        <service>
+            <role>YARNUI</role>
+            <url>http://c1232-node2.coelab.cloudera.com:8088</url>
+        </service>
+
+        <service>
+            <role>DRUID-COORDINATOR-UI</role>
+        </service>
+        <service>
+            <role>DRUID-COORDINATOR</role>
+        </service>
+        <service>
+            <role>DRUID-OVERLORD-UI</role>
+        </service>
+        <service>
+            <role>DRUID-OVERLORD</role>
+        </service>
+        <service>
+            <role>DRUID-ROUTER</role>
+        </service>
+        <service>
+            <role>DRUID-BROKER</role>
+        </service>
+        <service>
+            <role>ZEPPELINUI</role>
+        </service>
+        <service>
+            <role>ZEPPELINWS</role>
+        </service>
+
+</topology>
