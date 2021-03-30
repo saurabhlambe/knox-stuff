@@ -1,4 +1,3 @@
-
             <topology>
             <gateway>
             <provider>
@@ -99,7 +98,7 @@
 
             <param>
             <name>main.ldapRealm.contextFactory.url</name>
-            <value>ldap://172.26.126.78:389</value>
+            <value>ldap://ldap-host:389</value>
             </param>
             <param>
             <name>main.ldapRealm.authenticationCachingEnabled</name>
