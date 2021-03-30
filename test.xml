@@ -98,7 +98,7 @@
 
             <param>
             <name>main.ldapRealm.contextFactory.url</name>
-            <value>ldap://10.113.243.16:389</value>
+            <value>ldap://ldap-host:389</value>
             </param>
             <param>
             <name>main.ldapRealm.authenticationCachingEnabled</name>
